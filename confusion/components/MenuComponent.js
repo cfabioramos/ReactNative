@@ -1,8 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
 import { View, FlatList } from "react-native";
 import { ListItem } from "react-native-elements";
+import { DISHES } from "../shared/dishes"
 
-function Menu(props) {
+function Menu({ navigation }) {
+
+  const [dishes] = useState(DISHES);
+
   const renderMenuItem = ({ item, index }) => {
     return (
       <ListItem
@@ -10,6 +14,7 @@ function Menu(props) {
         title={item.name}
         subtitle={item.description}
         hideChevron={true}
+        onPress={() => navigation.navigate('Dishdetail', {dish: item}) }
         leftAvatar={{ source: require(`./${item.image}`) }}
       />
     );
@@ -17,7 +22,7 @@ function Menu(props) {
 
   return (
     <FlatList
-      data={props.dishes}
+      data={dishes}
       renderItem={renderMenuItem}
       keyExtractor={(item) => item.id.toString()}
     />
