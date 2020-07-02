@@ -2,7 +2,7 @@ import React from "react";
 import { Text, View } from "react-native";
 import { Card } from "react-native-elements";
 
-function RenderDish({ route, navigation }) {
+function RenderDish({ route }) {
 
   const { dish } = route.params;
 
