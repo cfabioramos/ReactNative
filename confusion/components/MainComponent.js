@@ -6,6 +6,7 @@ import ExpoStatusBar from "expo-status-bar/build/ExpoStatusBar";
 
 import "react-native-gesture-handler";
 import { createStackNavigator } from "@react-navigation/stack";
+import ContactInformation from "./ContactInformation";
 
 function Main({navigation}) {
   const Stack = createStackNavigator();
