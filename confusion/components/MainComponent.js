@@ -3,10 +3,10 @@ import { View, Platform, Button } from "react-native";
 import Menu from "./MenuComponent";
 import Dishdetail from "./DishdetailComponent";
 import ExpoStatusBar from "expo-status-bar/build/ExpoStatusBar";
-
-import "react-native-gesture-handler";
+import { Icon } from 'react-native-elements';
 import { createStackNavigator } from "@react-navigation/stack";
-import ContactInformation from "./ContactInformation";
+import "react-native-gesture-handler";
+
 
 function Main({navigation}) {
   const Stack = createStackNavigator();
@@ -34,7 +34,10 @@ function Main({navigation}) {
         <Stack.Screen
           name="Menu"
           component={Menu}
-          options={{ title: "Menu" }}
+          options={{ 
+            title: "Menu" ,
+            headerLeft: () => (<Icon name='menu' size={24} color='white' onPress={() => navigation.toggleDrawer() }/>)
+          }}
         />
         <Stack.Screen
           name="Dishdetail"
