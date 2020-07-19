@@ -1,8 +1,17 @@
 import * as React from "react";
-import { Text, ScrollView, Button, View, StyleSheet, Image, Linking } from "react-native";
+import {
+  Text,
+  ScrollView,
+  Button,
+  View,
+  StyleSheet,
+  Image,
+  Linking,
+} from "react-native";
 import Main from "./MainComponent";
 import { Card } from "react-native-elements";
 import ContactInformation from "./ContactInformation";
+import { connect } from "react-redux";
 
 import { NavigationContainer, SafeAreaView } from "@react-navigation/native";
 import {
@@ -11,10 +20,23 @@ import {
   DrawerItemList,
   DrawerItem,
 } from "@react-navigation/drawer";
+import {
+  fetchDishes,
+  fetchComments,
+  fetchPromos,
+  fetchLeaders,
+} from "../redux/ActionCreators";
 
 import { DISHES } from "../shared/dishes";
 import { PROMOTIONS } from "../shared/promotions";
 import { LEADERS } from "../shared/leaders";
+
+const mapDispatchToProps = (dispatch) => ({
+  fetchDishes: () => dispatch(fetchDishes()),
+  fetchComments: () => dispatch(fetchComments()),
+  fetchPromos: () => dispatch(fetchPromos()),
+  fetchLeaders: () => dispatch(fetchLeaders()),
+});
 
 function RenderItem(props) {
   const item = props.item;
@@ -94,13 +116,23 @@ function CustomDrawerContentComponent(props) {
       <DrawerItemList {...props} />
       <DrawerItem
         label="Help"
-        onPress={() => Linking.openURL('http://reactmastercourse.com')}/>
+        onPress={() => Linking.openURL("http://reactmastercourse.com")}
+      />
     </DrawerContentScrollView>
   );
 }
 
-function Home() {
+function Home(props) {
   const Drawer = createDrawerNavigator();
+
+  console.log(props)
+
+  React.useEffect(() => {
+    props.fetchDishes();
+    props.fetchComments();
+    props.fetchPromos();
+    props.fetchLeaders();
+  }, []);
 
   return (
     <NavigationContainer>
@@ -116,4 +148,4 @@ function Home() {
   );
 }
 
-export default Home;
+export default connect(null, mapDispatchToProps)(Home);

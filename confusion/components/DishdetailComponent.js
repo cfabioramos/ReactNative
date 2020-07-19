@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Text, View, ScrollView, FlatList } from "react-native";
 import { Card, Icon } from "react-native-elements";
 import { COMMENTS } from "../shared/comments";
+import { connect } from 'react-redux';
 
 function RenderComments(props) {
   const comments = props.comments;
@@ -79,4 +80,4 @@ function main({ route }) {
   );
 }
 
-export default main;
+export default connect()(main);

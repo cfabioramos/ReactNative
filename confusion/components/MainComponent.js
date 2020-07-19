@@ -1,14 +1,14 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { View, Platform, Button } from "react-native";
 import Menu from "./MenuComponent";
 import Dishdetail from "./DishdetailComponent";
 import ExpoStatusBar from "expo-status-bar/build/ExpoStatusBar";
-import { Icon } from 'react-native-elements';
+import { Icon } from "react-native-elements";
 import { createStackNavigator } from "@react-navigation/stack";
 import "react-native-gesture-handler";
+import { connect } from 'react-redux';
 
-
-function Main({navigation}) {
+function Main(props) {
   const Stack = createStackNavigator();
 
   return (
@@ -34,9 +34,16 @@ function Main({navigation}) {
         <Stack.Screen
           name="Menu"
           component={Menu}
-          options={{ 
-            title: "Menu" ,
-            headerLeft: () => (<Icon name='menu' size={24} color='white' onPress={() => navigation.toggleDrawer() }/>)
+          options={{
+            title: "Menu",
+            headerLeft: () => (
+              <Icon
+                name="menu"
+                size={24}
+                color="white"
+                onPress={() => props.navigation.toggleDrawer()}
+              />
+            ),
           }}
         />
         <Stack.Screen
@@ -50,4 +57,4 @@ function Main({navigation}) {
   );
 }
 
-export default Main;
+export default connect()(Main);
