@@ -3,7 +3,7 @@ import { Text, View, ScrollView, FlatList } from "react-native";
 import { Card, Icon } from "react-native-elements";
 import { COMMENTS } from "../shared/comments";
 import { connect, useSelector } from "react-redux";
-import { postFavorite } from '../redux/ActionCreators';
+import { postFavorite } from "../redux/ActionCreators";
 
 function RenderComments(props) {
   const comments = props.comments;
@@ -53,39 +53,41 @@ function RenderDish(props) {
   }
 }
 
-const mapStateToProps = state => {
-    return {
-      dishes: state.dishes,
-      comments: state.comments,
-      favorites: state.favorites
-    }
-  }
+const mapStateToProps = (state) => {
+  return {
+    dishes: state.dishes,
+    comments: state.comments,
+    favorites: state.favorites,
+  };
+};
 
-const mapDispatchToProps = dispatch => ({
-    postFavorite: (dishId) => dispatch(postFavorite(dishId))
-})
+const mapDispatchToProps = (dispatch) => ({
+  postFavorite: (dishId) => dispatch(postFavorite(dishId)),
+});
 
 function DishDetail(props) {
   const [comments] = useState(COMMENTS);
-  const favorites = useSelector(state => state.favorites)
+  const favorites = useSelector((state) => state.favorites);
 
   const markFavorite = (dishId) => {
     props.postFavorite(dishId);
-  }
+  };
 
-  console.log('Dish: ')
-  console.log(props.route.params.dish)
+  console.log("Dish: ");
+  console.log(props.route.params.dish);
 
   return (
     <ScrollView>
       <RenderDish
         dish={props.route.params.dish}
         favorite={favorites.some((el) => el === props.route.params.dish.id)}
-        onPress={() => markFavorite(props.route.params.dish.id)}/>
+        onPress={() => markFavorite(props.route.params.dish.id)}
+      />
       <RenderComments
         comments={comments.filter(
           (comment) => comment.dishId === props.route.params.dish.id
-        )}/>
+        )}
+      />
     </ScrollView>
   );
 }
