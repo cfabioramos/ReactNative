@@ -2,7 +2,7 @@ import * as ActionTypes from "./ActionTypes";
 import { baseUrl } from "../shared/baseUrl";
 
 export const fetchComments = () => (dispatch) => {
-  console.log('PASSOU por AQUI...')
+    dispatch(dishesLoading());
   return fetch(baseUrl + "comments")
     .then(
       (response) => {
@@ -22,9 +22,13 @@ export const fetchComments = () => (dispatch) => {
       }
     )
     .then((response) => response.json())
-    .then((comments) => {console.log('PASSOU por AQUI tambem...'); dispatch(addComments(comments)) } )
+    .then((comments) => dispatch(addComments(comments)) )
     .catch((error) => dispatch(commentsFailed(error.message)));
 };
+
+export const commentsLoading = () => ({
+  type: ActionTypes.COMMENTS_LOADING,
+});
 
 export const commentsFailed = (errmess) => ({
   type: ActionTypes.COMMENTS_FAILED,
@@ -154,4 +158,16 @@ export const leadersFailed = (errmess) => ({
 export const addLeaders = (leaders) => ({
   type: ActionTypes.ADD_LEADERS,
   payload: leaders,
+});
+
+export const postFavorite = (dishId)  => (dispatch) => {
+    setTimeout(() => {
+        dispatch(addFavorite(dishId));
+    }, 2000);
+};
+
+
+export const addFavorite = (dishId) => ({
+    type: ActionTypes.ADD_FAVORITE,
+    payload: dishId
 });

@@ -2,7 +2,8 @@ import React, { useState } from "react";
 import { Text, View, ScrollView, FlatList } from "react-native";
 import { Card, Icon } from "react-native-elements";
 import { COMMENTS } from "../shared/comments";
-import { connect } from 'react-redux';
+import { connect, useSelector } from "react-redux";
+import { postFavorite } from '../redux/ActionCreators';
 
 function RenderComments(props) {
   const comments = props.comments;
@@ -31,7 +32,6 @@ function RenderComments(props) {
 
 function RenderDish(props) {
   const dish = props.dish;
-  console.log(props.favorite)
   if (dish != null) {
     return (
       <Card featuredTitle={dish.name} image={require(`./${dish.image}`)}>
@@ -53,31 +53,41 @@ function RenderDish(props) {
   }
 }
 
-function main({ route }) {
+const mapStateToProps = state => {
+    return {
+      dishes: state.dishes,
+      comments: state.comments,
+      favorites: state.favorites
+    }
+  }
+
+const mapDispatchToProps = dispatch => ({
+    postFavorite: (dishId) => dispatch(postFavorite(dishId))
+})
+
+function DishDetail(props) {
   const [comments] = useState(COMMENTS);
-  const [favorites, setFavorites] = useState([]);
+  const favorites = useSelector(state => state.favorites)
 
   const markFavorite = (dishId) => {
-    if ( !(favorites.some((el) => el === dishId)) ){
-      favorites.push(dishId);
-      setFavorites([...favorites])
-    }
-  } 
+    props.postFavorite(dishId);
+  }
+
+  console.log('Dish: ')
+  console.log(props.route.params.dish)
 
   return (
     <ScrollView>
       <RenderDish
-        dish={route.params.dish}
-        favorite={favorites.some((el) => el === route.params.dish.id)}
-        onPress={() => markFavorite(route.params.dish.id)}
-      />
+        dish={props.route.params.dish}
+        favorite={favorites.some((el) => el === props.route.params.dish.id)}
+        onPress={() => markFavorite(props.route.params.dish.id)}/>
       <RenderComments
         comments={comments.filter(
-          (comment) => comment.dishId === route.params.dish.id
-        )}
-      />
+          (comment) => comment.dishId === props.route.params.dish.id
+        )}/>
     </ScrollView>
   );
 }
 
-export default connect()(main);
+export default connect(mapStateToProps, mapDispatchToProps)(DishDetail);
