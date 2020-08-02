@@ -13,6 +13,7 @@ import { Card } from "react-native-elements";
 import ContactInformation from "./ContactInformation";
 import { connect, useSelector } from "react-redux";
 import { NavigationContainer, SafeAreaView } from "@react-navigation/native";
+import Reservation from "./ReservationComponent";
 import {
   createDrawerNavigator,
   DrawerContentScrollView,
@@ -161,6 +162,7 @@ function Home(props) {
       >
         <Drawer.Screen name="Home" component={HomePage} />
         <Drawer.Screen name="Main" component={Main} />
+        <Drawer.Screen name="Reservation" component={Reservation} />
         <Drawer.Screen name="ContactUs" component={ContactInformation} />
       </Drawer.Navigator>
     </NavigationContainer>

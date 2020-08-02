@@ -6,7 +6,7 @@ import ExpoStatusBar from "expo-status-bar/build/ExpoStatusBar";
 import { Icon } from "react-native-elements";
 import { createStackNavigator } from "@react-navigation/stack";
 import "react-native-gesture-handler";
-import { connect } from 'react-redux';
+import { connect } from "react-redux";
 
 function Main(props) {
   const Stack = createStackNavigator();
@@ -49,8 +49,7 @@ function Main(props) {
         <Stack.Screen
           name="Dishdetail"
           component={Dishdetail}
-          options={{ title: "Dish details" }}
-        />
+          options={{ title: "Dish details" }}/>
       </Stack.Navigator>
       <Button onPress={() => navigation.navigate("Home")} title="Go to Home" />
     </View>
